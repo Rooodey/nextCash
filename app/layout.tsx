@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+import { ChartColumnBigIcon } from "lucide-react";
+import Link from "next/link";
+import { ClerkProvider } from "@clerk/nextjs";
+import NavAuth from "@/components/NavAuth";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
   subsets: ["latin"],
 });
 
@@ -23,12 +23,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${poppins.variable} antialiased`}>
+          <nav className="bg-primary p-4 text-white h-20 flex items-center justify-between">
+            <Link
+              href="/"
+              className="font-bold text-2xl flex gap-1 items-center"
+            >
+              <ChartColumnBigIcon className="text-lime-500" /> NextCash
+            </Link>
+            <NavAuth />
+          </nav>
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
